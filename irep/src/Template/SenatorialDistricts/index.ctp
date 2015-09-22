@@ -70,7 +70,7 @@
     var geocoder;
     var map;
     //var local_govt = {"local":[{"lg":"Amuwo Odofin"}, {"lg":"Surulere"}, {"lg":"Ikeja"}]};
-   /* function loadJSON(callback) {   
+    function loadJSON(callback) {   
 
         var xobj = new XMLHttpRequest();
             xobj.overrideMimeType("application/json");
@@ -82,7 +82,7 @@
               }
         };
         xobj.send(null);  
-     }*/
+     }
 
     
     
@@ -96,7 +96,7 @@
       
       map = new google.maps.Map(document.getElementById("mymap"), mapOptions);
 
-     /* loadJSON(function(response) {
+      loadJSON(function(response) {
   		  // Parse JSON string into object
   		    var states = JSON.parse(response);
 
@@ -111,7 +111,7 @@
           position: latlng
       });
               }
-      });*/
+      });
       }
 
     </script>
