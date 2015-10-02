@@ -11,13 +11,12 @@
 			private static $queryObject;
 
 			protected static $validMethodNames = array("getFederalConstituency", "getLocalGovernment", "getSenatorialDistrict",
-												"getState", "getStateConstituency"
-											);
-
+												"		getState", "getStateConstituency"
+											          );
 			protected $tableColumns = array("FederalConstituency"=>"federal_constituencies", "LocalGovernment"=>"local_govts",
 											"SenatorialDistrict"=>"senatorial_districts", "State"=>"states",
 											"StateConstituency"=>"state_constituencies" 
-										);
+										   );
 			protected static $returnResponse;
 			public function __construct(\Slim\Slim $slimObject, \Query $queryObject, irep_response $returnResponse)
 			{
