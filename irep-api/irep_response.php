@@ -56,10 +56,18 @@
 					default:
 					{
 						$this->HTTP_HEADER["Status-Code-Desc-Code"] = "204";
-						$this->HTTP_HEADER["Status-Code-Desc"] = "Request processed, No Content Returned";
+						$this->HTTP_HEADER["Status-Code-Desc"] = "Request processed, But Response Wasn't Understood";
 					}
 				}
 			}
+			return self::returnResponse($json_response);
+		}
+
+		public function returnResponse($jsonObj)
+		{
+			$decodedJsonObj = json_decode($jsonObj);
+			$mainResponseObject = json_encode(array("header"=>$this->HTTP_HEADER, "body"=>$decodedJsonObj));
+			print_r($mainResponseObject);
 		}
 	}
 ?>
