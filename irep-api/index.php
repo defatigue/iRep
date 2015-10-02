@@ -1,7 +1,7 @@
 <?php
 	require "irep_class.php";
 	require "dependencies/Slim/Slim/Slim.php";
-	require "dependencies/Database-Object-Manager/QueryManager.php";
+	require "dependencies/DOM/QueryManager.php";
 	\Slim\Slim::registerAutoloader();
 
 	use iRep\irep_class;

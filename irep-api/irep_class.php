@@ -41,7 +41,11 @@
 						return self::invalidRequest("No Request Made");
 					});
 
-					self::$slimObject->get("/:methodName", function($methodName){
+					self::$slimObject->get("/:auth/:methodName", function($auth, $methodName){
+						if (!self::isValidApiCall($auth))
+						{
+							return self::$queryObject->exception->returnError(new \Exception("Invalid API Call"));
+						}
 						if (!self::isMethodNameValidMethod("get", self::getMethodName($methodName)))
 						{
 							return self::invalidRequest("Invalid Method Requested");
@@ -53,7 +57,11 @@
 						}
 					});
 
-					self::$slimObject->get("/:methodName/:parameters+", function($methodName, $parameters){
+					self::$slimObject->get("/:auth/:methodName/:parameters+", function($auth, $methodName, $parameters){
+						if (!self::isValidApiCall($auth))
+						{
+							return self::$queryObject->exception->returnError(new \Exception("Invalid API Call"));
+						}
 						if (!self::isMethodNameValidMethod("get", self::getMethodName($methodName)))
 						{
 							return self::invalidRequest("Invalid Method Requested");
@@ -74,6 +82,12 @@
 			public function runApplication()
 			{
 				self::$slimObject->run();
+			}
+
+			public function isValidApiCall($authenticationString)
+			{
+				//Validate API Access Information. For now return true (Development mode enabled);
+				return true;
 			}
 
 			private static function getMethodName($methodName)
