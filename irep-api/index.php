@@ -5,9 +5,8 @@
 	\Slim\Slim::registerAutoloader();
 
 	use iRep\irep_class;
-	$exception = new ExceptionManager();
-	$test = new irep_class(new \Slim\Slim(), new Query($exception), new iRep\irep_response());
-	$result = $test->getMethod();
-	print_r($result);
-	$test->runApplication();
+
+	$iRepClassObject = new irep_class(new \Slim\Slim(), new Query(new ExceptionManager()), new iRep\irep_response());
+	$returnedResult = $iRepClassObject->getMethod();
+	$iRepClassObject->runApplication();
 ?>

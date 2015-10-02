@@ -24,49 +24,57 @@
 				{
 					$this->HTTP_HEADER["Status-Code-Desc-Code"] = "204";
 					$this->HTTP_HEADER["Status-Code-Desc"] = "Request processed, No Content Returned";
+					$json_response = json_encode($responseObject);
 				}
-				$json_response = json_encode($responseObject);
-				switch(json_last_error())
+				else
 				{
-					case JSON_ERROR_NONE:
+					$json_response = json_encode($responseObject);
+					switch(json_last_error())
 					{
-						$this->HTTP_HEADER["Status-Code-Desc-Code"] = "200";
-						$this->HTTP_HEADER["Status-Code-Desc"] = "Request processed Successfully, No Error Occurred";
-						break;
-					}
+						case JSON_ERROR_NONE:
+						{
+							$this->HTTP_HEADER["Status-Code-Desc-Code"] = "200";
+							$this->HTTP_HEADER["Status-Code-Desc"] = "Request processed Successfully, No Error Occurred";
+							break;
+						}
 
-					case JSON_ERROR_DEPTH:
-					{
-						$this->HTTP_HEADER["Status-Code-Desc-Code"] = "413";
-						$this->HTTP_HEADER["Status-Code-Desc"] = "Maximum Stack Depth Exceeded, Request is too large to process";
-						break;
-					}
+						case JSON_ERROR_DEPTH:
+						{
+							$this->HTTP_HEADER["Status-Code-Desc-Code"] = "413";
+							$this->HTTP_HEADER["Status-Code-Desc"] = "Maximum Stack Depth Exceeded, Request is too large to process";
+							break;
+						}
 
-					case JSON_ERROR_STATE_MISMATCH:
-					case JSON_ERROR_CTRL_CHAR:
-					case JSON_ERROR_SYNTAX:
-					case JSON_ERROR_UTF8:
-					case JSON_ERROR_INF_OR_NAN:
-					case JSON_ERROR_UNSUPPORTED_TYPE:
-					{
-						$this->HTTP_HEADER["Status-Code-Desc-Code"] = "400";
-						$this->HTTP_HEADER["Status-Code-Desc"] = "Request cannot be fulfilled, Response contains malformed or invalid characters";
-						break;
+						case JSON_ERROR_STATE_MISMATCH:
+						case JSON_ERROR_CTRL_CHAR:
+						case JSON_ERROR_SYNTAX:
+						case JSON_ERROR_UTF8:
+						case JSON_ERROR_INF_OR_NAN:
+						case JSON_ERROR_UNSUPPORTED_TYPE:
+						{
+							$this->HTTP_HEADER["Status-Code-Desc-Code"] = "400";
+							$this->HTTP_HEADER["Status-Code-Desc"] = "Request cannot be fulfilled, Response contains malformed or invalid characters";
+							break;
+						}
+						default:
+						{
+							$this->HTTP_HEADER["Status-Code-Desc-Code"] = "204";
+							$this->HTTP_HEADER["Status-Code-Desc"] = "Request processed, But Response Wasn't Understood";
+						}
 					}
-					default:
-					{
-						$this->HTTP_HEADER["Status-Code-Desc-Code"] = "204";
-						$this->HTTP_HEADER["Status-Code-Desc"] = "Request processed, But Response Wasn't Understood";
 					}
-				}
 			}
 			return self::returnResponse($json_response);
 		}
 
-		public function returnResponse($jsonObj)
+		private function returnResponse($jsonObj)
 		{
 			$decodedJsonObj = json_decode($jsonObj);
-			$mainResponseObject = json_encode(array("header"=>$this->HTTP_HEADER, "body"=>$decodedJsonObj));
+			$mainResponseObject = ($this->HTTP_HEADER["Status-Code-Desc-Code"]=="200")
+												?
+								json_encode(array("header"=>$this->HTTP_HEADER, "body"=>$decodedJsonObj))
+												:
+								json_encode(array("header"=>$this->HTTP_HEADER));
 			print_r($mainResponseObject);
 		}
 	}
