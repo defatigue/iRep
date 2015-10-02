@@ -3,7 +3,7 @@
 	{
 		interface irep_interface
 		{
-			public function __construct(\Slim\Slim $slimObject, \Query $queryObject);
+			public function __construct(\Slim\Slim $slimObject, \Query $queryObject, irep_response $respObject);
 /*
 			function getFederalConstituency();
 

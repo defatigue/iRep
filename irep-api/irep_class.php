@@ -2,6 +2,7 @@
 	namespace iRep
 	{
 		require_once "irep_interface.php";
+		require_once "irep_response.php";
 		use iRep\irep_interface;
 
 		class irep_class implements irep_interface
@@ -17,11 +18,19 @@
 											"SenatorialDistrict"=>"senatorial_districts", "State"=>"states",
 											"StateConstituency"=>"state_constituencies" 
 										);
-
-			public function __construct(\Slim\Slim $slimObject, \Query $queryObject)
+			protected static $returnResponse;
+			public function __construct(\Slim\Slim $slimObject, \Query $queryObject, irep_response $returnResponse)
 			{
-				self::$slimObject = $slimObject;
-				self::$queryObject = $queryObject;
+				try
+				{
+					self::$slimObject = $slimObject;
+					self::$queryObject = $queryObject;
+					self::$returnResponse = $returnResponse;
+				}
+				catch(Exception $e)
+				{
+					return $queryObject->exception->returnError($e);
+				}
 			}
 
 			public function getMethod()
@@ -29,13 +38,13 @@
 				try
 				{
 					self::$slimObject->get("/", function(){
-						return self::invalidRequest();
+						return self::invalidRequest("No Request Made");
 					});
 
 					self::$slimObject->get("/:methodName", function($methodName){
 						if (!self::isMethodNameValidMethod("get", self::getMethodName($methodName)))
 						{
-							return self::invalidRequest();
+							return self::invalidRequest("Invalid Method Requested");
 						}
 						else
 						{
@@ -47,7 +56,7 @@
 					self::$slimObject->get("/:methodName/:parameters+", function($methodName, $parameters){
 						if (!self::isMethodNameValidMethod("get", self::getMethodName($methodName)))
 						{
-							return self::invalidRequest();
+							return self::invalidRequest("Invalid Method Requested");
 						}
 						else
 						{
@@ -86,17 +95,18 @@
 				return $boolValid;
 			}
 
-			protected function invalidRequest()
+			protected function invalidRequest($errorMessage)
 			{
 				try
 				{
 					//log error
-					throw new \Exception();
+					throw new \Exception($errorMessage);
 				}
 				catch(\Exception $e)
 				{
 					//DEBUG: print_r($e);
-					echo "An Invalid Request Was Sent, Please Review and Try Again";
+					//echo "An Invalid Request Was Sent, Please Review and Try Again";
+					return self::$queryObject->exception->returnError($e);
 				}
 
 			}
@@ -104,7 +114,7 @@
 			private function activateMethod()
 			{
 				$method = (isset(func_get_args()[0]))?func_get_args()[0]:null;
-				$parameters = (isset(func_get_args()[1]))?func_get_args()[1]:null;
+				$parameters = (isset(func_get_args()[1]))?func_get_args()[1][0]:null;
 
 				switch(strtolower($method))
 				{
@@ -151,14 +161,13 @@
 				if (!is_null(func_get_args()))
 				{
 					$query = self::stringifyQuery("select",
-												   array("*", $this->tableColumns["FederalConstituency"], func_get_args()[0][0])
+												   array("*", $this->tableColumns["FederalConstituency"], func_get_args()[0])
 												  );
 				}
 				else
 				{
 					$query = self::stringifyQuery("select", array("*", $this->tableColumns["FederalConstituency"]));
 				}
-
 				$result = self::$queryObject->Execute($query);
 				return $result;
 			}
@@ -168,7 +177,7 @@
 				if (!is_null(func_get_args()))
 				{
 					$query = self::stringifyQuery("select",
-												   array("*", $this->tableColumns["LocalGovernment"], func_get_args()[0][0])
+												   array("*", $this->tableColumns["LocalGovernment"], func_get_args()[0])
 												  );
 				}
 				else
@@ -185,7 +194,7 @@
 				if (!is_null(func_get_args()))
 				{
 					$query = self::stringifyQuery("select",
-												   array("*", $this->tableColumns["SenatorialDistrict"], func_get_args()[0][0])
+												   array("*", $this->tableColumns["SenatorialDistrict"], func_get_args()[0])
 												  );
 				}
 				else
@@ -202,7 +211,7 @@
 				if (!is_null(func_get_args()))
 				{
 					$query = self::stringifyQuery("select",
-												   array("*", $this->tableColumns["State"], func_get_args()[0][0])
+												   array("*", $this->tableColumns["State"], func_get_args()[0])
 												  );
 				}
 				else
@@ -219,7 +228,7 @@
 				if (!is_null(func_get_args()))
 				{
 					$query = self::stringifyQuery("select",
-												   array("*", $this->tableColumns["StateConstituency"], func_get_args()[0][0])
+												   array("*", $this->tableColumns["StateConstituency"], func_get_args()[0])
 												  );
 				}
 				else
@@ -239,7 +248,7 @@
 					{
 						if (isset($crudParams[2]))
 						{
-							$stringifiedQuery = "SELECT ".$crudParams[0]." FROM ".$crudParams[1]." WHERE ".$crudParams[2];
+							$stringifiedQuery = "SELECT ".$crudParams[0]." FROM ".$crudParams[1]." WHERE id_no=".$crudParams[2];
 						}
 						else
 						{
@@ -253,13 +262,12 @@
 						$stringifiedQuery = "under construction";
 					}
 				}
-
 				return $stringifiedQuery;
 			}
 
 			public function returnResult($results)
 			{
-				print_r(json_encode($results));
+				self::$returnResponse->execute($results);
 			}
 
 		}
