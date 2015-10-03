@@ -1,4 +1,5 @@
 <?php
+//irep_class.php
 	namespace iRep
 	{
 		require_once "irep_interface.php";
