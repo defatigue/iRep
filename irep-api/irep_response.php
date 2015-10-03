@@ -20,15 +20,14 @@
 			{
 				/*print_r($this->HTTP_HEADER);
 				print_r(json_encode($responseObject));*/
+				$json_response = json_encode($responseObject);
 				if (count($responseObject) < 1)
 				{
 					$this->HTTP_HEADER["Status-Code-Desc-Code"] = "204";
 					$this->HTTP_HEADER["Status-Code-Desc"] = "Request processed, No Content Returned";
-					$json_response = json_encode($responseObject);
 				}
 				else
 				{
-					$json_response = json_encode($responseObject);
 					switch(json_last_error())
 					{
 						case JSON_ERROR_NONE:
