@@ -273,7 +273,7 @@
 
 					default:
 					{
-						$stringifiedQuery = "under construction";
+						$stringifiedQuery = "The module is under construction";
 					}
 				}
 				return $stringifiedQuery;
