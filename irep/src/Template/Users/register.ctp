@@ -387,7 +387,7 @@ $appDescription = 'iRep: Know your Rep!';
                                     echo $this->Form->input('federal_constituency', array('class'=>'form-control', 'options'=>$FederalConstituencies));
                                 ?>
                             </fieldset>
-                            <?= $this->Form->button(__('Submit')) ?>
+                            <div class="center col-md-offset-4 col-xs-offset-3"><?= $this->Form->button(__('Complete Your Registration'), ['class'=>'btn btn-success btn-large col-md-5']) ?></div>
                             <?= $this->Form->end() ?>
                         </div>
 

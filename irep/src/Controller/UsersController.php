@@ -60,7 +60,7 @@ class UsersController extends AppController
         $this->set(compact('user'));
         $this->set('_serialize', ['user']);
         $this->loadModel('FederalConstituencies');
-        $federalConstituency = $this->FederalConstituencies->find('all');
+        $federalConstituency = $this->FederalConstituencies->find('all', array('order'=>array('federal_constituency'=>'ASC')));
         $this->set('federalConstituency', $federalConstituency);
     }
 
