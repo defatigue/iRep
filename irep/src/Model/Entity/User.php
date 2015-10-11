@@ -2,6 +2,7 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\Auth\DefaultPasswordHasher;
 
 /**
  * User Entity.
@@ -25,9 +26,9 @@ class User extends Entity
     ];
 
     
-
-    public function federalConsituencies()
+    public function _setPassword($originalPassword)
     {
-        return array('a', 'b', 'c');
+        $hasherObject = new DefaultPasswordHasher();
+        return $hasherObject->hash($originalPassword);
     }
 }
