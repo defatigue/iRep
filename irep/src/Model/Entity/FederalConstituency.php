@@ -20,4 +20,5 @@ class FederalConstituency extends Entity
         'state' => true,
         'local_govts' => true,
     ];
+
 }

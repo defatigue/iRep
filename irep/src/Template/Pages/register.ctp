@@ -1,18 +1,5 @@
 <?php
-/**
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @since         0.10.0
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
- */
-
+$this->layout = false;
 $appDescription = 'iRep: Know your Rep!';
 ?>
 <!DOCTYPE html>
@@ -23,6 +10,7 @@ $appDescription = 'iRep: Know your Rep!';
 
 	<head>
 		<meta charset="utf-8">
+		<title>The Project | Home</title>
 		<meta name="description" content="The Project a Bootstrap-based, Responsive HTML5 Template">
 		<meta name="author" content="htmlcoder.me">
 
@@ -38,11 +26,7 @@ $appDescription = 'iRep: Know your Rep!';
 		<link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
 		<link href='http://fonts.googleapis.com/css?family=PT+Serif' rel='stylesheet' type='text/css'>
 
-    <title>
-        <?= $appDescription ?>:
-        <?= $this->fetch('title') ?>
-    </title>
-    <!-- Bootstrap core CSS -->
+		<!-- Bootstrap core CSS -->
 		<?=
 		$this->Html->css('bootstrap.css');
 		?>
@@ -82,7 +66,7 @@ $appDescription = 'iRep: Know your Rep!';
 	<!-- "boxed": boxed layout mode e.g. <body class="boxed"> -->
 	<!-- "pattern-1 ... pattern-9": background patterns for boxed layout mode e.g. <body class="boxed pattern-1"> -->
 	<!-- "transparent-header": makes the header transparent and pulls the banner to top -->
-	<body class="no-trans front-page transparent-header " onload="initialize()">
+	<body class="no-trans front-page transparent-header ">
 
 		<!-- scrollToTop -->
 		<!-- ================ -->
@@ -150,8 +134,9 @@ $appDescription = 'iRep: Know your Rep!';
 									<!-- ================ -->
 									<div class="header-top-dropdown text-right">
 										<div class="btn-group">
+											<!-- <a href="page-signup.html" class="btn btn-default btn-sm"><i class="fa fa-user pr-10"></i> Sign Up</a> -->
 											<?=
-											$this->Html->link('Sign Up', array('controller'=> 'Users', 'action'=>'register'), ['class'=>'btn btn-default btn-sm']);
+											$this->Html->link('Sign Up', array('controller'=> 'Pages', 'action'=>'register'), ['class'=>'btn btn-default btn-sm']);
 											?>
 										</div>
 										<div class="btn-group dropdown">
@@ -214,8 +199,7 @@ $appDescription = 'iRep: Know your Rep!';
 									<!-- logo -->
 									<div id="logo" class="logo">
 										<?= $this->Html->image('frontend/images/logo_green.png', ['alt' => 'The Project', 'url' => array('controller'=> 'Pages', 'action'=>'display'), 'id'=> 'logo-image']);?>
-										
-									</div>
+										</div>
 
 									<!-- name-and-slogan -->
 									<div class="site-slogan">
@@ -375,27 +359,115 @@ $appDescription = 'iRep: Know your Rep!';
 				<!-- header end -->
 			</div>
 			<!-- header-container end -->
+		
 			<!-- banner start -->
 			<!-- ================ -->
-			<div id="banner" class="banner dark-translucent-bg padding-bottom-clear">
-				<!-- section start -->
-				<!-- ================ -->
+			<div class="banner clearfix">
+
 				<div class="container">
-					<div class="row"><div id="mymap" style="width: 100%; height: 480px;"></div>
+					<div class="row"><div id=""></div>
+						<?php
+							echo "<form>";
+							echo $this->Form->create($user);
+							echo "<div class='form-group'>";
+							echo $this->Form->input('firstname', ['class'=>'form-control', 'placeholder'=>'First Name', 'label'=>false]);
+							echo "</div>";
+							echo "<div class='form-group'>";
+							echo $this->Form->input('lastname', ['class'=>'form-control', 'placeholder'=>'Last Name', 'label'=>false]);
+							echo "</div>";
+							echo "<div class='form-group'>";
+							echo $this->Form->input('email', ['class'=>'form-control', 'placeholder'=>'Email', 'type'=>'email', 'label'=>false]);
+							echo "</div>";
+							echo "<div class='form-group'>";
+							echo $this->Form->input('phone', ['class'=>'form-control', 'placeholder'=>'Phone', 'label'=>false]);
+							echo "</div>";
+							echo "<div class='form-group'>";
+							echo $this->Form->input('username', ['class'=>'form-control', 'placeholder'=>'User Name', 'label'=>false]);
+							echo "</div>";
+							echo "<div class='form-group'>";
+							echo $this->Form->input('password', ['class'=>'form-control', 'placeholder'=>'password', 'type'=>'password', 'label'=>false]);
+							echo "</div>";
+							echo "<div class='form-group'>";
+							echo $this->Form->input('password', ['class'=>'form-control', 'placeholder'=>'Confirm Password', 'type'=>'password', 'label'=>false]);
+							echo "</div>";
+							echo $this->Form->submit();
+							echo $this->Form->end();
+						?>
 					</div>										
 				</div>
-				<!-- section end -->
-				<!-- section start -->
-				<!-- ================ -->
-				<div class="pv-40 dark-translucent-bg">
-					<div class="container">
-						<div class="row">
-		                	<?= $this->fetch('content') ?>
-		                </div>
-	             	</div>
-         		</div>
-	       </div>
-            <footer id="footer" class="clearfix ">
+
+			</div>
+			<!-- banner end -->
+			
+			<div id="page-start"></div>
+
+			<!-- section start -->
+			<!-- ================ -->
+			<section class="light-gray-bg pv-30 clearfix">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-8 col-md-offset-2">
+							<h2 class="text-center">Core <strong>Features</strong></h2>
+							<div class="separator"></div>
+							<p class="large text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam voluptas facere vero ex tempora saepe perspiciatis ducimus sequi animi.</p>
+						</div>
+						<div class="col-md-4 ">
+							<div class="pv-30 ph-20 feature-box bordered shadow text-center object-non-visible" data-animation-effect="fadeInDownSmall" data-effect-delay="100">
+								<span class="icon default-bg circle"><i class="fa fa-connectdevelop"></i></span>
+								<h3>Constituency Connect</h3>
+								<div class="separator clearfix"></div>
+								<p>Voluptatem ad provident non repudiandae beatae cupiditate amet reiciendis lorem ipsum dolor sit amet, consectetur.</p>
+								<a href="page-services.html">Read More <i class="pl-5 fa fa-angle-double-right"></i></a>
+							</div>
+						</div>
+						<div class="col-md-4 ">
+							<div class="pv-30 ph-20 feature-box bordered shadow text-center object-non-visible" data-animation-effect="fadeInDownSmall" data-effect-delay="150">
+								<span class="icon default-bg circle"><i class="fa fa-comment-o"></i></span>
+								<h3>Instant Messaging</h3>
+								<div class="separator clearfix"></div>
+								<p>Iure sequi unde hic. Sapiente quaerat sequi inventore veritatis cumque lorem ipsum dolor sit amet, consectetur.</p>
+								<a href="page-services.html">Read More <i class="pl-5 fa fa-angle-double-right"></i></a>
+							</div>
+						</div>
+						<div class="col-md-4 ">
+							<div class="pv-30 ph-20 feature-box bordered shadow text-center object-non-visible" data-animation-effect="fadeInDownSmall" data-effect-delay="200">
+								<span class="icon default-bg circle"><i class="fa icon-snow"></i></span>
+								<h3>Polling</h3>
+								<div class="separator clearfix"></div>
+								<p>Inventore dolores aut laboriosam cum consequuntur delectus sequi lorem ipsum dolor sit amet, consectetur.</p>
+								<a href="page-services.html">Read More <i class="pl-5 fa fa-angle-double-right"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- section end -->
+
+			<!-- section start -->
+			<!-- ================ -->
+			<section class="section default-bg clearfix">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="call-to-action text-center">
+								<div class="row">
+									<div class="col-sm-8">
+										<h1 class="title">Hop on board now!</h1>
+										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem quasi explicabo consequatur consectetur, a atque voluptate officiis eligendi nostrum.</p>
+									</div>
+									<div class="col-sm-4">
+										<br>
+										<p><a href="#" class="btn btn-lg btn-gray-transparent btn-animated">Learn More<i class="fa fa-arrow-right pl-20"></i></a></p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- section end -->
+			<!-- ================ -->
+			<footer id="footer" class="clearfix ">
 
 				<!-- .footer start -->
 				<!-- ================ -->
@@ -406,9 +478,9 @@ $appDescription = 'iRep: Know your Rep!';
 								<div class="col-md-8">
 									<div class="footer-content">
 										<div class="logo-footer">
-										<?=
-										$this->Html->image('Frontend/images/logo_green.png', ['alt'=> '']);
-										?>
+						<?=
+						$this->Html->image('Frontend/images/logo_green.png', ['alt'=> '']);
+						?>
 										</div>
 										<div class="row">
 											<div class="col-md-6">
